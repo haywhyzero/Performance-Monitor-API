@@ -80,11 +80,12 @@ class ErrorLog:
 class DatabaseManager:
     """Handle all database operations"""
     
-    def __init__(self, db_url: Optional[str] = Config.DATABASE_URL):
+    def __init__(self, db_url: Optional[str] = Config.DATABASE_URL, initialize: bool = False):
         if not db_url:
             raise ValueError("DATABASE_URL is not set. Cannot initialize DatabaseManager.")
         self.db_url = db_url
-        self._initialize_database()
+        if initialize:
+            self._initialize_database()
     
     def _initialize_database(self):
         """Create database tables if they don't exist"""
@@ -297,7 +298,7 @@ class PerformanceMonitor:
         if not Config.DATABASE_URL:
             logger.critical("DATABASE_URL environment variable not set. Exiting.")
             sys.exit(1)
-        self.db = DatabaseManager(Config.DATABASE_URL)
+        self.db = DatabaseManager(Config.DATABASE_URL) # Initialization is now separate
         self.thresholds = {
             'cpu': 80.0,
             'memory': 80.0,
