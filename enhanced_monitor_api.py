@@ -94,7 +94,7 @@ class DatabaseManager:
         # Performance metrics table
         cursor.execute('''
             CREATE TABLE IF NOT EXISTS metrics (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                id SERIAL PRIMARY KEY,
                 timestamp TEXT NOT NULL,
                 cpu_usage DOUBLE PRECISION,
                 memory_usage DOUBLE PRECISION,
@@ -112,7 +112,7 @@ class DatabaseManager:
         # Error logs table
         cursor.execute('''
             CREATE TABLE IF NOT EXISTS errors (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                id SERIAL PRIMARY KEY,
                 timestamp TEXT NOT NULL,
                 level TEXT,
                 error_type TEXT,
@@ -132,7 +132,7 @@ class DatabaseManager:
         # API keys table
         cursor.execute('''
             CREATE TABLE IF NOT EXISTS api_keys (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                id SERIAL PRIMARY KEY,
                 key_hash TEXT UNIQUE NOT NULL,
                 key_name TEXT,
                 created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
