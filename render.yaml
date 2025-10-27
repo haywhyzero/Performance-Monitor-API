@@ -1,0 +1,26 @@
+# ============================================
+# render.yaml - For Render.com Deployment
+# ============================================
+services:
+  - type: web
+    name: performance-monitor-api
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn -w 1 -b 0.0.0.0:$PORT app:app
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: false
+      - key: RATE_LIMIT
+        value: 100 per hour
+      - key: MAX_HISTORY_RECORDS
+        value: 10000
+    disk:
+      name: monitoring-data
+      mountPath: /opt/render/project/src
+      sizeGB: 1
+
+
