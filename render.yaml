@@ -1,6 +1,12 @@
 # ============================================
 # render.yaml - For Render.com Deployment
 # ============================================
+databases:
+  - name: database1
+    databaseName: database1_cozl
+    user: database1_cozl_user
+    plan: free 
+
 services:
   - type: web
     name: performance-monitor-api
@@ -18,9 +24,7 @@ services:
         value: 100 per hour
       - key: MAX_HISTORY_RECORDS
         value: 10000
-    disk:
-      name: monitoring-data
-      mountPath: /opt/render/project/src
-      sizeGB: 1
-
-
+      - key: DATABASE_URL # This links the web service to the database
+        fromDatabase:
+          name: database1
+          property: connectionString
